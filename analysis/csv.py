@@ -22,6 +22,9 @@ class SetOfParliamentMember:
     def data_from_dataframe(self, dataframe):
         self.dataframe = dataframe
 
+    def __repr__(self):
+        return "SetOfParliamentMember: {} members".format(len(self.dataframe))
+
     def display_chart(self):
         data = self.dataframe
         female_mps = data[data.sexe == "F"]
@@ -60,7 +63,7 @@ class SetOfParliamentMember:
         return result
 
 
-def launch_analysis(data_file, by_party = False):
+def launch_analysis(data_file, by_party = False, info = False):
     sopm = SetOfParliamentMember("All MPs")
     sopm.data_from_csv(os.path.join("data",data_file))
     sopm.display_chart()
@@ -68,6 +71,8 @@ def launch_analysis(data_file, by_party = False):
     if by_party:
         for party, s in sopm.split_by_political_party().items():
             s.display_chart()
+    if info:
+            print(sopm)
 
 if __name__ == "__main__":
     launch_analysis('current_mps.csv')
